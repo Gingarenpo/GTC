@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * This Mod's description, comment, and other are only Japanese.
  */
 
-@Mod(modid = GTC2.MODID, name = GTC2.MOD_NAME, version = GTC2.STRING_VERSION, dependencies = "required-after:rtm;required-after:gingacore@[2.2,)")
+@Mod(modid = GTC2.MODID, name = GTC2.MOD_NAME, version = GTC2.STRING_VERSION, dependencies = "required-after:gingacore@[2.2,)" )
 public class GTC2 implements IModCore {
 	/* ---------------------------- ここから定数 ---------------------------------- */
 	/**
@@ -115,6 +115,7 @@ public class GTC2 implements IModCore {
 	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
+		// 基本的にここには記さない
 
 	}
 
