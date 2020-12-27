@@ -1,10 +1,18 @@
 package jp.gingarenpo.gtc2;
 
 import jp.gingarenpo.api.core.Version;
+import jp.gingarenpo.api.helper.GFileHelper;
 import jp.gingarenpo.api.interfaces.IModCore;
+import jp.gingarenpo.gtc2.block.GTC2Block;
+import jp.gingarenpo.gtc2.config.GTC2Config;
+import jp.gingarenpo.gtc2.log.GTC2Log;
+import jp.gingarenpo.gtc2.proxy.GTC2Proxy;
+import jp.gingarenpo.gtc2.tab.GTC2Tab;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -20,6 +28,10 @@ import java.util.ArrayList;
  *
  * 当ModはRTM対応版GTCと共存できるように作られています。したがって、当Modは「GTC2」という名称になります。
  * バージョン番号も2.0より割り振りを始める予定です。
+ *
+ * 共存できるように作ってはいるんですが、重複する追加アイテムがあったり、連携は考慮していなかったりするので
+ * あくまで「一緒に入れて起動することができる」とだけ思ってください。こちらのModはRTMを必要としないため、
+ * そもそもの前提条件がGTC1.0と異なるんですよね。
  *
  * @version 2.0
  * @author 銀河連邦
@@ -96,6 +108,13 @@ public class GTC2 implements IModCore {
 	 */
 	public static ArrayList<String> GUI_ID = new ArrayList<String>(); // indexがGUIID、StringがそのGUIを示すキー。
 
+	/**
+	 * Mod内で、クライアント側とサーバー側で分けなくてはならない処理がある場合にプロキシを指定します。
+	 * このプロキシが、自動で識別してそっち限定の処理を実行してくれます。サーバーだと落ちるって現象を若干回避できるかも。
+	 */
+	@SidedProxy(clientSide = "jp.gingarenpo.gtc2.proxy.GTC2ClientProxy", serverSide = "jp.gingarenpo.gtc2.proxy.GTC2Proxy")
+	public static GTC2Proxy proxy; // プロキシ
+
 	/* ---------------------------- ここまで定数 ---------------------------------- */
 
 	/* ---------------------------- ここからイベントメソッド ---------------------------------- */
@@ -115,7 +134,23 @@ public class GTC2 implements IModCore {
 	 */
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
-		// 基本的にここには記さない
+		// いずれはリフレクションによる処理に変更したい
+		new GTC2Log().init(e);
+		new GTC2Config().init(e);
+		new GTC2Block().init(e);
+		new GTC2Tab().init(e);
+
+		// 更新チェックを行う(GingaCore参照）
+		try {
+			if (GFileHelper.isUpdateOnServer(this)) {
+				GTC2Log.log(I18n.format("message.updateVersion"));
+			}
+			else {
+				GTC2Log.log(I18n.format("message.latestVersion"));
+			}
+		} catch (GFileHelper.VersionCheckException versionCheckException) {
+			versionCheckException.printStackTrace();
+		}
 
 	}
 
@@ -174,5 +209,17 @@ public class GTC2 implements IModCore {
 	public int registerGUI(String name) {
 		GTC2.GUI_ID.add(name); // 名前をキーとするものを配列に追加
 		return GTC2.GUI_ID.size() - 1; // 配列は0から始まるのでindexも1減らさないといけない
+	}
+
+	/**
+	 * 指定したGUI名のGUIIDを返します。存在しない場合は-1が返ります。
+	 * @param name GUIの名前。
+	 * @return int GUIID。ない場合は-1。
+	 */
+	public int getGUIID(String name) {
+		for (int i = 0; i < GTC2.GUI_ID.size(); i++) {
+			if (GTC2.GUI_ID.get(i) == name) return i; // 一致したらそれを返す
+		}
+		return -1;
 	}
 }

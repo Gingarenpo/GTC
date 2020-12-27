@@ -1,0 +1,12 @@
+# 日本語用言語ファイル
+# 細かなところはソースコードを参照
+
+# [メッセージ関連]
+message.updateVersion=GTC2のアップデートがあります。更新してみてはいかが？
+message.latestVersion=御使いのGTC2は最新です。
+
+# [ブロック関連]
+tile.gtc2_traffic_pole.name=交通信号機用電柱/アーム
+
+# [タブ]
+itemGroup.GTC2=GTC2

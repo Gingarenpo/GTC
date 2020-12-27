@@ -5,14 +5,18 @@ tasks.withType(Jar) {
 
 dependencies {
 	compile project(':GingaCore')
-	compile fileTree(dir: 'lib', include: '*.jar')
+	testCompile(fileTree(dir: 'lib', include: '*.jar'))
 }
+
+println("OK");
+
 
 sourceSets.main {
 	java.srcDirs project.projectDir.name
 	resources.srcDirs project.projectDir.name
 	resources.exclude 'dats'
 }
+
 version = "2.0-beta1"
 
 jar {

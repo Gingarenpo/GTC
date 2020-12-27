@@ -1,0 +1,12 @@
+# English Language File
+# If you don't know them, please see source codes.
+
+# [Message]
+message.updateVersion=GTC2 has update version!
+message.latestVersion=Your GTC2 version is latest.
+
+# [Block]
+tile.gtc2_traffic_pole.name=Traffic Pole / Arm
+
+# [Tab]
+itemGroup.GTC2=GTC2
