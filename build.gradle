@@ -5,6 +5,7 @@ tasks.withType(Jar) {
 
 dependencies {
 	compile project(':GingaCore')
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.3.4'
 	testCompile(fileTree(dir: 'lib', include: '*.jar'))
 }
 

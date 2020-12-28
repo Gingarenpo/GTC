@@ -4,6 +4,10 @@
 # [Message]
 message.updateVersion=GTC2 has update version!
 message.latestVersion=Your GTC2 version is latest.
+message.foundZip=Found %d zips at Mods dir.
+message.cannotOpenZip="%s" is not zip file. GTC can't open this file. World will not open.
+message.loadZip=Complete load pack of "%s".
+message.completeZip=Complete load %d packs as GTC2 Resource Pack.
 
 # [Block]
 tile.gtc2_traffic_pole.name=Traffic Pole / Arm

@@ -6,6 +6,7 @@ import jp.gingarenpo.api.interfaces.IModCore;
 import jp.gingarenpo.gtc2.block.GTC2Block;
 import jp.gingarenpo.gtc2.config.GTC2Config;
 import jp.gingarenpo.gtc2.log.GTC2Log;
+import jp.gingarenpo.gtc2.manager.GTC2ResourceManager;
 import jp.gingarenpo.gtc2.proxy.GTC2Proxy;
 import jp.gingarenpo.gtc2.tab.GTC2Tab;
 import net.minecraft.client.resources.I18n;
@@ -164,11 +165,11 @@ public class GTC2 implements IModCore {
 
 	/**
 	 * Modの最終読み込みステージとなります。この時点で、ほかのModのリソースなどはすべて読み込まれているので、ワールド起動前に
-	 * 何かしたい場合は利用できます。ただこのModでは特に使うつもりがありません。
+	 * 何かしたい場合は利用できます。
 	 */
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-
+		new GTC2ResourceManager().init(e);
 	}
 
 	/* ---------------------------- ここまでイベントメソッド ---------------------------------- */

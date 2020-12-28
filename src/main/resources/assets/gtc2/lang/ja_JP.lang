@@ -4,6 +4,10 @@
 # [メッセージ関連]
 message.updateVersion=GTC2のアップデートがあります。更新してみてはいかが？
 message.latestVersion=御使いのGTC2は最新です。
+message.foundZip=Modsフォルダより%d個のZipファイルを検出しました。
+message.cannotOpenZip=「%s」は無効なZipファイルです。開くことができませんでした。ワールドを開けない可能性があります。
+message.loadZip=「%s」の読み込みが完了しました。
+message.completeZip=%d個のZipファイルをGTC2用パックとして読み込みました。
 
 # [ブロック関連]
 tile.gtc2_traffic_pole.name=交通信号機用電柱/アーム
